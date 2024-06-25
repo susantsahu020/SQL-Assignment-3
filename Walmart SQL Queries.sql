@@ -26,7 +26,7 @@ SHOW GLOBAL VARIABLES LIKE 'local_infile';
 SET GLOBAL local_infile = 1;
 
 LOAD DATA LOCAL INFILE 
-'/Users/mohammedshehbazdamkar/Downloads/WalmartSalesData.csv.csv'
+'/Users/susant/Downloads/WalmartSalesData.csv.csv'
 INTO TABLE sales
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -34,7 +34,6 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 
-------------------- Feature Engineering -----------------------------
 1. Time_of_day
 
 SELECT time,
@@ -80,15 +79,15 @@ UPDATE sales
 SET month_name = MONTHNAME(date);
 
 
-----------------Exploratory Data Analysis (EDA)----------------------
-Generic Questions
+
+Generic Questions :
 -- 1.How many distinct cities are present in the dataset?
 SELECT DISTINCT city FROM sales;
 
 -- 2.In which city is each branch situated?
 SELECT DISTINCT branch, city FROM sales;
 
-Product Analysis
+Product Questions :
 -- 1.How many distinct product lines are there in the dataset?
 SELECT COUNT(DISTINCT product_line) FROM sales;
 
@@ -144,7 +143,7 @@ SELECT product_line, ROUND(AVG(rating),2) average_rating
 FROM sales GROUP BY product_line ORDER BY average_rating DESC;
 
 
-Sales Analysis
+Sales Questions
 -- 1.Number of sales made in each time of the day per weekday
 SELECT day_name, time_of_day, COUNT(invoice_id) AS total_sales
 FROM sales GROUP BY day_name, time_of_day HAVING day_name NOT IN ('Sunday','Saturday');
@@ -164,7 +163,7 @@ FROM sales GROUP BY city ORDER BY total_VAT DESC LIMIT 1;
 SELECT customer_type, SUM(VAT) AS total_VAT
 FROM sales GROUP BY customer_type ORDER BY total_VAT DESC LIMIT 1;
 
-Customer Analysis
+Customer Questions :
 
 -- 1.How many unique customer types does the data have?
 SELECT COUNT(DISTINCT customer_type) FROM sales;
